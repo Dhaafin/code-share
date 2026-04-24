@@ -61,6 +61,30 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting }) => {
           </div>
         </div>
 
+        {/* Quality Section */}
+        <div className="space-y-4">
+          <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
+            <Maximize className="w-3 h-3 rotate-45" /> Quality
+          </label>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                <span>Resolution</span>
+                <span className="text-zinc-500 font-mono text-[11px]">{settings.quality}x</span>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                step="1"
+                value={settings.quality}
+                onChange={(e) => setSettings({ ...settings, quality: parseInt(e.target.value) })}
+                className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Language Section */}
         <div className="space-y-4">
           <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
@@ -147,7 +171,7 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting }) => {
             "Export PNG"
           )}
         </button>
-        <p className="text-[10px] text-center mt-3 text-zinc-400 font-medium">Rendered at 4x resolution</p>
+        <p className="text-[10px] text-center mt-3 text-zinc-400 font-medium">Rendered at {settings.quality}x resolution</p>
       </div>
     </div>
   );

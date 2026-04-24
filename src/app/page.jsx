@@ -13,7 +13,8 @@ export default function Home() {
     glassmorphism: true,
     language: "javascript",
     multiPage: false,
-    linesPerPage: 20
+    linesPerPage: 20,
+    quality: 4
   });
 
   const [code, setCode] = useState(`// Welcome to CodeShare! 🚀
@@ -47,7 +48,7 @@ console.log(generateAwesomeSnippet(config));`);
     try {
       if (!settings.multiPage) {
         setExportStatus("Generating image...");
-        const dataUrl = await toPng(exportRef.current, { cacheBust: true, pixelRatio: 4 });
+        const dataUrl = await toPng(exportRef.current, { cacheBust: true, pixelRatio: settings.quality });
         const link = document.createElement('a');
         link.download = `codeshare-${Date.now()}.png`;
         link.href = dataUrl;
@@ -69,7 +70,7 @@ console.log(generateAwesomeSnippet(config));`);
           // Wait for Shiki highlighting to catch up (it's async)
           await new Promise(resolve => setTimeout(resolve, 800));
           
-          const dataUrl = await toPng(exportRef.current, { cacheBust: true, pixelRatio: 4 });
+          const dataUrl = await toPng(exportRef.current, { cacheBust: true, pixelRatio: settings.quality });
           const link = document.createElement('a');
           link.download = `codeshare-part-${i + 1}-${Date.now()}.png`;
           link.href = dataUrl;
