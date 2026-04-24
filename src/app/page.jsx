@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import Sidebar from "@/components/Sidebar";
 import CodeWindow from "@/components/CodeWindow";
