@@ -58,7 +58,7 @@ console.log(generateAwesomeSnippet(config));`);
       {/* Preview Area */}
       <main className="flex-1 flex flex-col h-full overflow-hidden order-1 md:order-2">
         {/* Toolbar */}
-        <header className="h-14 md:h-16 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4 md:px-8 bg-white/50 dark:bg-black/50 backdrop-blur-sm justify-between shrink-0">
+        <header className="h-14 md:h-16 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4 md:px-8 bg-white dark:bg-black justify-between shrink-0 z-10">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-[11px] md:text-[13px] font-medium text-zinc-500">Preview Mode</span>
@@ -66,27 +66,31 @@ console.log(generateAwesomeSnippet(config));`);
         </header>
 
         {/* Studio Canvas */}
-        <div className="flex-1 relative overflow-y-auto p-4 md:p-12 flex items-center justify-center bg-zinc-100/30 dark:bg-zinc-900/10">
-          <div className="w-full max-w-4xl">
-            <div ref={exportRef}>
-              <CodeWindow 
-                code={code} 
-                {...settings} 
-              />
-            </div>
+        <div className="flex-1 relative overflow-y-auto bg-zinc-100/30 dark:bg-zinc-900/10 custom-scrollbar">
+          <div className="w-full min-h-full flex flex-col items-center pt-16 md:pt-24 pb-24 px-4 md:px-12">
             
-            {/* Real-time Text Area */}
-            <div className="mt-4 md:mt-8 relative group">
-              <textarea
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="w-full h-32 md:h-48 p-4 bg-white/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl font-mono text-xs md:text-sm focus:outline-none focus:ring-2 ring-zinc-500/20 transition-all resize-none"
-                placeholder="Paste your code here..."
-              />
-              <div className="absolute top-3 right-3 text-[10px] font-bold text-zinc-400 md:group-hover:opacity-100 opacity-0 transition-opacity uppercase tracking-widest pointer-events-none">
-                Raw Editor
+            <div className="w-full max-w-3xl flex flex-col gap-8 md:gap-12">
+              <div ref={exportRef} className="w-full">
+                <CodeWindow 
+                  code={code} 
+                  {...settings} 
+                />
+              </div>
+              
+              {/* Real-time Text Area */}
+              <div className="relative group">
+                <textarea
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="w-full h-32 md:h-48 p-4 bg-white/10 dark:bg-zinc-900/10 border border-zinc-200 dark:border-zinc-800 rounded-xl font-mono text-xs md:text-sm focus:outline-none focus:ring-2 ring-zinc-500/20 transition-all resize-none shadow-sm backdrop-blur-md"
+                  placeholder="Paste your code here..."
+                />
+                <div className="absolute top-3 right-3 text-[10px] font-bold text-zinc-400 md:group-hover:opacity-100 opacity-0 transition-opacity uppercase tracking-widest pointer-events-none">
+                  Raw Editor
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </main>

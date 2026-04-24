@@ -47,7 +47,7 @@ const CodeWindow = ({
       style={{ padding: `min(${padding}px, 10vw)` }}
     >
       <div 
-        className={`w-full max-w-2xl min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col ${
+        className={`w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col ${
           theme === 'dark' ? 'bg-zinc-950/90' : 'bg-white/90'
         } ${glassmorphism ? 'apple-blur' : ''}`}
       >
