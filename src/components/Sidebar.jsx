@@ -5,7 +5,7 @@ import { Sliders, Maximize, Palette, Type } from "lucide-react";
 
 const Sidebar = ({ settings, setSettings, onExport }) => {
   return (
-    <div className="w-80 h-full bg-white dark:bg-black border-r border-zinc-200 dark:border-zinc-800 p-8 flex flex-col gap-8">
+    <div className="w-full md:w-80 h-auto md:h-full bg-white dark:bg-black border-t md:border-t-0 md:border-r border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col gap-6 md:gap-8 order-2 md:order-1">
       <div>
         <h2 className="text-xl font-semibold mb-1 grayscale-0 hover:grayscale transition-all cursor-default">CodeShare</h2>
         <p className="text-sm text-zinc-500 font-medium tracking-tight">Premium Snippet Studio</p>
