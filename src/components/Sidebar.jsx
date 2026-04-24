@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Sliders, Maximize, Palette, Type, Copy, Check, ChevronDown, Layout } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopying }) => {
   const [expanded, setExpanded] = useState({
@@ -38,130 +39,160 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
         <div className="space-y-4">
           <AccordionHeader id="design" label="Design" icon={Palette} isOpen={expanded.design} />
           
-          {expanded.design && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-top-2 duration-300 pl-1">
-              {/* Appearance */}
-              <div className="space-y-3">
-                <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Background</span>
-                <div className="grid grid-cols-4 gap-2">
-                  {['bg-mesh-1', 'bg-mesh-2', 'bg-mesh-3', 'bg-zinc-950'].map((bg) => (
-                    <button
-                      key={bg}
-                      onClick={() => setSettings({ ...settings, background: bg })}
-                      className={`h-8 rounded-md border-2 transition-all group overflow-hidden relative cursor-pointer ${bg} ${
-                        settings.background === bg ? 'border-zinc-950 dark:border-white scale-105' : 'border-transparent'
-                      }`}
-                    >
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                    </button>
-                  ))}
-                </div>
-              </div>
+          <AnimatePresence initial={false}>
+            {expanded.design && (
+              <motion.div 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-6 pb-4 pl-1">
+                  {/* Appearance */}
+                  <div className="space-y-3">
+                    <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Background</span>
+                    <div className="grid grid-cols-4 gap-2">
+                      {['bg-mesh-1', 'bg-mesh-2', 'bg-mesh-3', 'bg-zinc-950'].map((bg) => (
+                        <button
+                          key={bg}
+                          onClick={() => setSettings({ ...settings, background: bg })}
+                          className={`h-8 rounded-md border-2 transition-all group overflow-hidden relative cursor-pointer ${bg} ${
+                            settings.background === bg ? 'border-zinc-950 dark:border-white scale-105' : 'border-transparent'
+                          }`}
+                        >
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Layout */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
-                  <span>Padding</span>
-                  <span className="text-zinc-500 font-mono text-[11px]">{settings.padding}px</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="128"
-                  step="8"
-                  value={settings.padding}
-                  onChange={(e) => setSettings({ ...settings, padding: parseInt(e.target.value) })}
-                  className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
-                />
-              </div>
+                  {/* Layout */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                      <span>Padding</span>
+                      <span className="text-zinc-500 font-mono text-[11px]">{settings.padding}px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="128"
+                      step="8"
+                      value={settings.padding}
+                      onChange={(e) => setSettings({ ...settings, padding: parseInt(e.target.value) })}
+                      className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+                    />
+                  </div>
 
-              {/* Quality */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
-                  <span>Resolution</span>
-                  <span className="text-zinc-500 font-mono text-[11px]">{settings.quality}x</span>
+                  {/* Quality */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                      <span>Resolution</span>
+                      <span className="text-zinc-500 font-mono text-[11px]">{settings.quality}x</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="5"
+                      step="1"
+                      value={settings.quality}
+                      onChange={(e) => setSettings({ ...settings, quality: parseInt(e.target.value) })}
+                      className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+                    />
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="5"
-                  step="1"
-                  value={settings.quality}
-                  onChange={(e) => setSettings({ ...settings, quality: parseInt(e.target.value) })}
-                  className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
-                />
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Language Accordion */}
         <div className="space-y-4">
           <AccordionHeader id="language" label="Language" icon={Type} isOpen={expanded.language} />
           
-          {expanded.language && (
-            <div className="grid grid-cols-1 gap-2 animate-in fade-in slide-in-from-top-2 duration-300 pl-1">
-              {[
-                { id: 'javascript', name: 'JavaScript' },
-                { id: 'python', name: 'Python' },
-                { id: 'css', name: 'CSS' }
-              ].map((lang) => (
-                <button
-                  key={lang.id}
-                  onClick={() => setSettings({ ...settings, language: lang.id })}
-                  className={`flex items-center justify-between px-4 h-10 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
-                    settings.language === lang.id
-                      ? 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-md'
-                      : 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-                  }`}
-                >
-                  {lang.name}
-                  {settings.language === lang.id && <div className="w-1.5 h-1.5 rounded-full bg-white dark:bg-zinc-950" />}
-                </button>
-              ))}
-            </div>
-          )}
+          <AnimatePresence initial={false}>
+            {expanded.language && (
+              <motion.div 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="grid grid-cols-1 gap-2 pb-4 pl-1">
+                  {[
+                    { id: 'javascript', name: 'JavaScript' },
+                    { id: 'python', name: 'Python' },
+                    { id: 'css', name: 'CSS' }
+                  ].map((lang) => (
+                    <button
+                      key={lang.id}
+                      onClick={() => setSettings({ ...settings, language: lang.id })}
+                      className={`flex items-center justify-between px-4 h-10 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
+                        settings.language === lang.id
+                          ? 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-md'
+                          : 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                      }`}
+                    >
+                      {lang.name}
+                      {settings.language === lang.id && <div className="w-1.5 h-1.5 rounded-full bg-white dark:bg-zinc-950" />}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Advanced/Carousel */}
         <div className="space-y-4">
           <AccordionHeader id="advanced" label="Advanced" icon={Sliders} isOpen={expanded.advanced} />
           
-          {expanded.advanced && (
-            <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300 pl-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Carousel mode</span>
-                <button 
-                  onClick={() => setSettings({ ...settings, multiPage: !settings.multiPage })}
-                  className={`w-10 h-5 rounded-full transition-all relative cursor-pointer ${
-                    settings.multiPage ? 'bg-green-500' : 'bg-zinc-200 dark:bg-zinc-800'
-                  }`}
-                >
-                  <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${
-                    settings.multiPage ? 'left-6' : 'left-1'
-                  }`} />
-                </button>
-              </div>
-              
-              {settings.multiPage && (
-                <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/50">
-                  <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
-                    <span>Lines per page</span>
-                    <span className="text-zinc-500 font-mono text-[11px]">{settings.linesPerPage}</span>
+          <AnimatePresence initial={false}>
+            {expanded.advanced && (
+              <motion.div 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-4 pb-4 pl-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Carousel mode</span>
+                    <button 
+                      onClick={() => setSettings({ ...settings, multiPage: !settings.multiPage })}
+                      className={`w-10 h-5 rounded-full transition-all relative cursor-pointer ${
+                        settings.multiPage ? 'bg-green-500' : 'bg-zinc-200 dark:bg-zinc-800'
+                      }`}
+                    >
+                      <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${
+                        settings.multiPage ? 'left-6' : 'left-1'
+                      }`} />
+                    </button>
                   </div>
-                  <input
-                    type="range"
-                    min="5"
-                    max="50"
-                    step="5"
-                    value={settings.linesPerPage}
-                    onChange={(e) => setSettings({ ...settings, linesPerPage: parseInt(e.target.value) })}
-                    className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
-                  />
+                  
+                  {settings.multiPage && (
+                    <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/50">
+                      <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                        <span>Lines per page</span>
+                        <span className="text-zinc-500 font-mono text-[11px]">{settings.linesPerPage}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="5"
+                        max="50"
+                        step="5"
+                        value={settings.linesPerPage}
+                        onChange={(e) => setSettings({ ...settings, linesPerPage: parseInt(e.target.value) })}
+                        className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+                      />
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
