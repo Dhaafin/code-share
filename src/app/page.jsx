@@ -58,10 +58,20 @@ console.log(generateAwesomeSnippet(config));`);
 
       const blob = await toBlob(exportRef.current, { cacheBust: true, pixelRatio: settings.quality });
       if (blob) {
-        const item = new ClipboardItem({ "image/png": blob });
-        await navigator.clipboard.write([item]);
-        setExportStatus("Copied!");
-        setTimeout(() => setExportStatus(""), 2000);
+        // Ensure document is focused before writing to clipboard
+        window.focus();
+        
+        try {
+          const item = new ClipboardItem({ "image/png": blob });
+          await navigator.clipboard.write([item]);
+          setExportStatus("Copied!");
+          setTimeout(() => setExportStatus(""), 2000);
+        } catch (clipboardErr) {
+          console.error('Clipboard write failed:', clipboardErr);
+          // Fallback or retry if needed, but usually window.focus handles it
+          setExportStatus("Focus failed - please click again");
+          setTimeout(() => setExportStatus(""), 3000);
+        }
       }
     } catch (err) {
       console.error('Failed to copy image:', err);
