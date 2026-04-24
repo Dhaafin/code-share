@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Sidebar from "@/components/Sidebar";
 import CodeWindow from "@/components/CodeWindow";
-import { toPng } from "html-to-image";
+import { toPng, toBlob } from "html-to-image";
 
 export default function Home() {
   const [settings, setSettings] = useState({
@@ -39,8 +39,39 @@ console.log(generateAwesomeSnippet(config));`);
 
   const exportRef = useRef(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [isCopying, setIsCopying] = useState(false);
   const [exportStatus, setExportStatus] = useState("");
 
+  const copyImage = async () => {
+    if (exportRef.current === null) return;
+    setIsCopying(true);
+    setExportStatus("Copying to clipboard...");
+
+    try {
+      if (settings.multiPage) {
+        // For multi-page, we'll just copy the first page for now
+        const lines = code.split('\n');
+        const chunk = lines.slice(0, settings.linesPerPage).join('\n');
+        setActiveCode(chunk);
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+
+      const blob = await toBlob(exportRef.current, { cacheBust: true, pixelRatio: settings.quality });
+      if (blob) {
+        const item = new ClipboardItem({ "image/png": blob });
+        await navigator.clipboard.write([item]);
+        setExportStatus("Copied!");
+        setTimeout(() => setExportStatus(""), 2000);
+      }
+    } catch (err) {
+      console.error('Failed to copy image:', err);
+      setExportStatus("Failed to copy");
+      setTimeout(() => setExportStatus(""), 2000);
+    } finally {
+      setIsCopying(false);
+      setActiveCode(null);
+    }
+  };
   const exportImage = async () => {
     if (exportRef.current === null) return;
     setIsExporting(true);
@@ -92,7 +123,14 @@ console.log(generateAwesomeSnippet(config));`);
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-[#F4F4F7] dark:bg-[#080808] text-zinc-950 dark:text-zinc-50 overflow-hidden">
       {/* Settings Panel */}
-      <Sidebar settings={settings} setSettings={setSettings} onExport={exportImage} isExporting={isExporting} />
+      <Sidebar 
+        settings={settings} 
+        setSettings={setSettings} 
+        onExport={exportImage} 
+        isExporting={isExporting}
+        onCopy={copyImage}
+        isCopying={isCopying}
+      />
 
       {/* Preview Area */}
       <main className="flex-1 flex flex-col h-full overflow-hidden order-1 md:order-2">

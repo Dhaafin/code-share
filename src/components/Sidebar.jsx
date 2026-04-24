@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Sliders, Maximize, Palette, Type } from "lucide-react";
+import { Sliders, Maximize, Palette, Type, Copy, Check } from "lucide-react";
 
-const Sidebar = ({ settings, setSettings, onExport, isExporting }) => {
+const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopying }) => {
   return (
     <div className="w-full md:w-80 h-auto md:h-full bg-white dark:bg-black border-t md:border-t-0 md:border-r border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col gap-6 md:gap-8 order-2 md:order-1">
       <div>
@@ -169,6 +169,28 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting }) => {
             </>
           ) : (
             "Export PNG"
+          )}
+        </button>
+
+        <button 
+          className={`w-full h-12 mt-3 rounded-xl font-bold shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer border border-zinc-200 dark:border-zinc-800 ${
+            isCopying 
+              ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-400 cursor-not-allowed' 
+              : 'bg-white dark:bg-zinc-900 text-zinc-950 dark:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800/50 active:scale-[0.98]'
+          }`}
+          onClick={onCopy}
+          disabled={isCopying || isExporting}
+        >
+          {isCopying ? (
+            <>
+              <div className="w-4 h-4 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin" />
+              <span>Copying...</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-4 h-4" />
+              <span>Copy Image</span>
+            </>
           )}
         </button>
         <p className="text-[10px] text-center mt-3 text-zinc-400 font-medium">Rendered at {settings.quality}x resolution</p>
