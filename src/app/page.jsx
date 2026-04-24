@@ -14,17 +14,25 @@ export default function Home() {
     language: "javascript"
   });
 
-  const [code, setCode] = useState(`function helloWorld() {
-  console.log("Hello from CodeShare! 🚀");
+  const [code, setCode] = useState(`// Welcome to CodeShare! 🚀
+// Premium Syntax Highlighting Enabled
+
+function generateAwesomeSnippet(config) {
+  const { theme, quality } = config;
   
-  const config = {
-    theme: "apple",
-    quality: "premium",
-    isAwesome: true
+  return {
+    success: true,
+    message: \`Rendering in \${theme} mode...\`,
+    timestamp: Date.now()
   };
-  
-  return config;
-}`);
+}
+
+const config = {
+  theme: "apple",
+  quality: "premium"
+};
+
+console.log(generateAwesomeSnippet(config));`);
 
   const exportRef = useRef(null);
 

@@ -60,6 +60,33 @@ const Sidebar = ({ settings, setSettings, onExport }) => {
             </div>
           </div>
         </div>
+
+        {/* Language Section */}
+        <div className="space-y-4">
+          <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
+            <Type className="w-3 h-3" /> Language
+          </label>
+          <div className="grid grid-cols-1 gap-2">
+            {[
+              { id: 'javascript', name: 'JavaScript' },
+              { id: 'python', name: 'Python' },
+              { id: 'css', name: 'CSS' }
+            ].map((lang) => (
+              <button
+                key={lang.id}
+                onClick={() => setSettings({ ...settings, language: lang.id })}
+                className={`flex items-center justify-between px-4 h-10 rounded-xl text-[13px] font-medium transition-all ${
+                  settings.language === lang.id
+                    ? 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-md'
+                    : 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                }`}
+              >
+                {lang.name}
+                {settings.language === lang.id && <div className="w-1.5 h-1.5 rounded-full bg-white dark:bg-zinc-950" />}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="mt-auto">
