@@ -25,7 +25,7 @@ const Sidebar = ({ settings, setSettings, onExport }) => {
                   <button
                     key={bg}
                     onClick={() => setSettings({ ...settings, background: bg })}
-                    className={`h-8 rounded-md border-2 transition-all group overflow-hidden relative ${bg} ${
+                    className={`h-8 rounded-md border-2 transition-all group overflow-hidden relative cursor-pointer ${bg} ${
                       settings.background === bg ? 'border-zinc-950 dark:border-white scale-105' : 'border-transparent'
                     }`}
                   >
@@ -75,7 +75,7 @@ const Sidebar = ({ settings, setSettings, onExport }) => {
               <button
                 key={lang.id}
                 onClick={() => setSettings({ ...settings, language: lang.id })}
-                className={`flex items-center justify-between px-4 h-10 rounded-xl text-[13px] font-medium transition-all ${
+                className={`flex items-center justify-between px-4 h-10 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
                   settings.language === lang.id
                     ? 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-md'
                     : 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
@@ -91,7 +91,7 @@ const Sidebar = ({ settings, setSettings, onExport }) => {
 
       <div className="mt-auto">
         <button 
-          className="w-full h-12 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl font-bold shadow-premium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          className="w-full h-12 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl font-bold shadow-premium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
           onClick={onExport}
         >
           Export PNG
