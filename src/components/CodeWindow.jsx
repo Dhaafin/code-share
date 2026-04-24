@@ -73,6 +73,8 @@ const CodeWindow = ({
               margin: 0 !important;
               padding: 0 !important;
               overflow: visible !important;
+              white-space: pre-wrap !important;
+              word-break: break-word !important;
             }
             .shiki-wrapper code {
               font-family: inherit !important;
