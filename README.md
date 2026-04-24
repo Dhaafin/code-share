@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 CodeShare — Premium Snippet Studio
 
-## Getting Started
+CodeShare is a high-end web application designed for developers to create, style, and export beautiful code snippets. Inspired by Apple's minimalist aesthetic, it combines advanced syntax highlighting with modern web design patterns.
 
-First, run the development server:
+## 🛠️ Technical Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Syntax Highlighting**: [Shiki](https://shiki.style/) (The VS Code highlighting engine)
+- **Image Generation**: [html-to-image](https://github.com/bubkoo/html-to-image)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+
+## ✨ Key Technical Features
+
+### 1. High-Fidelity Syntax Highlighting
+The application utilizes **Shiki** to provide VS Code-level syntax highlighting accuracy. 
+- **Real-time Rendering**: Code is highlighted dynamically as the user types using a client-side `useEffect` hook.
+- **Language Support**: Native support for JavaScript, Python, and CSS (extensible).
+- **Adaptive Themes**: Context-aware switching between `github-dark` and `github-light` based on the studio's background settings.
+
+### 2. Apple-Style Design System
+- **Glassmorphism**: Leverages `backdrop-filter: blur(20px)` and semi-transparent backgrounds to create a premium "frosted glass" effect.
+- **Mesh Gradients**: Custom CSS-animated mesh gradients (`bg-mesh-1`, `bg-mesh-2`, etc.) that provide a dynamic, modern backdrop for code.
+- **Custom Scrollbars**: Minimalist, dark-themed scrollbars for both the web interface and the code viewer, ensuring a cohesive dark-mode experience.
+
+### 3. Responsive "Studio" Layout
+- **Adaptive Viewports**: The app features a fluid layout that transforms from a wide desktop studio to an ergonomic vertical stack on mobile.
+- **Scaling Logic**: The code preview padding scales dynamically using CSS `min()` functions and viewport units (e.g., `10vw`) to ensure high-padding windows don't break on narrow screens.
+- **Line Wrapping**: Smart `pre-wrap` and `break-word` implementation prevents horizontal overflow, keeping code centered and readable.
+
+### 4. Professional-Grade Export
+- **4x Resolution**: PNG exports are rendered at a **4x pixel ratio** using `html-to-image`, ensuring snippets remain crystal clear even on 4K displays or high-density social media feeds.
+- **Pixel-Perfect Canvas**: The export system captures the exact CSS state, including complex shadows, gradients, and fonts.
+
+## 🚀 Getting Started
+
+### Installation
+
+```bash
+git clone https://github.com/your-repo/code-screenshot.git
+cd code-screenshot
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to start creating.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📁 Component Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **`Sidebar.jsx`**: The command center. Manages state for themes, languages, and layout padding.
+- **`CodeWindow.jsx`**: The rendering engine. Handles Shiki integration, glassmorphism logic, and responsive alignment.
+- **`TrafficLights.jsx`**: A reusable atom providing the iconic macOS window control look.
+- **`page.jsx`**: The layout orchestrator. Manages global state and responsive container logic.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for the developer community.
