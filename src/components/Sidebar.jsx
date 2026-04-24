@@ -3,7 +3,7 @@
 import React from "react";
 import { Sliders, Maximize, Palette, Type } from "lucide-react";
 
-const Sidebar = ({ settings, setSettings, onExport }) => {
+const Sidebar = ({ settings, setSettings, onExport, isExporting }) => {
   return (
     <div className="w-full md:w-80 h-auto md:h-full bg-white dark:bg-black border-t md:border-t-0 md:border-r border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col gap-6 md:gap-8 order-2 md:order-1">
       <div>
@@ -87,14 +87,65 @@ const Sidebar = ({ settings, setSettings, onExport }) => {
             ))}
           </div>
         </div>
+
+        {/* Carousel Section */}
+        <div className="space-y-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/50">
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
+              <Sliders className="w-3 h-3" /> Carousel mode
+            </label>
+            <button 
+              onClick={() => setSettings({ ...settings, multiPage: !settings.multiPage })}
+              className={`w-10 h-5 rounded-full transition-all relative cursor-pointer ${
+                settings.multiPage ? 'bg-green-500' : 'bg-zinc-200 dark:bg-zinc-800'
+              }`}
+            >
+              <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${
+                settings.multiPage ? 'left-6' : 'left-1'
+              }`} />
+            </button>
+          </div>
+          
+          {settings.multiPage && (
+            <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="space-y-2">
+                <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                  <span>Lines per page</span>
+                  <span className="text-zinc-500 font-mono text-[11px]">{settings.linesPerPage}</span>
+                </div>
+                <input
+                  type="range"
+                  min="5"
+                  max="50"
+                  step="5"
+                  value={settings.linesPerPage}
+                  onChange={(e) => setSettings({ ...settings, linesPerPage: parseInt(e.target.value) })}
+                  className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="mt-auto">
         <button 
-          className="w-full h-12 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl font-bold shadow-premium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className={`w-full h-12 rounded-xl font-bold shadow-premium transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            isExporting 
+              ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-400 cursor-not-allowed' 
+              : 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 hover:opacity-90 active:scale-[0.98]'
+          }`}
           onClick={onExport}
+          disabled={isExporting}
         >
-          Export PNG
+          {isExporting ? (
+            <>
+              <div className="w-4 h-4 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin" />
+              <span>Exporting...</span>
+            </>
+          ) : (
+            "Export PNG"
+          )}
         </button>
         <p className="text-[10px] text-center mt-3 text-zinc-400 font-medium">Rendered at 4x resolution</p>
       </div>
