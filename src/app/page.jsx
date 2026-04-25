@@ -59,24 +59,31 @@ console.log(generateAwesomeSnippet(config));`);
     return snippets;
   };
 
-  useLayoutEffect(() => {
+  // Manage maxHeight synchronization
+  useEffect(() => {
     if (settings.multiPage && settings.syncHeight) {
-      // Small timeout to allow Shiki to render if needed, though heights 
-      // are mostly determined by line count and wrap
-      const measure = () => {
-        const heights = snippetRefs.current.map(ref => ref?.getBoundingClientRect().height || 0);
+      // If turning ON or code changed, reset to auto first to measure natural height
+      if (maxHeight !== "auto") setMaxHeight("auto");
+    } else {
+      // If turning OFF or multiPage is off, immediately reset to auto
+      if (maxHeight !== "auto") setMaxHeight("auto");
+    }
+  }, [code, settings.splitCount, settings.syncHeight, settings.padding, settings.multiPage]);
+
+  useLayoutEffect(() => {
+    // Only perform measurement if we are in sync mode and currently in 'auto' state
+    if (settings.multiPage && settings.syncHeight && maxHeight === "auto") {
+      const timer = setTimeout(() => {
+        const heights = snippetRefs.current.slice(0, settings.splitCount).map(ref => {
+          const inner = ref?.querySelector('.code-window-inner');
+          return inner ? inner.getBoundingClientRect().height : 0;
+        });
         const max = Math.max(...heights);
         if (max > 0) setMaxHeight(`${max}px`);
-      };
-      
-      measure();
-      // Re-measure after a bit to account for potential layout shifts
-      const timer = setTimeout(measure, 100);
+      }, 60); // Slightly longer delay for stability
       return () => clearTimeout(timer);
-    } else {
-      setMaxHeight("auto");
     }
-  }, [code, settings.multiPage, settings.syncHeight, settings.splitCount, settings.padding]);
+  }, [maxHeight, settings.multiPage, settings.syncHeight, settings.splitCount, code, settings.padding]);
 
   const copyImage = async () => {
     // Current behavior: copy the whole thing or first snippet
@@ -133,7 +140,7 @@ console.log(generateAwesomeSnippet(config));`);
           if (!target) continue;
           
           // Wait a bit for each to be definitely ready
-          await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise(resolve => setTimeout(resolve, 150));
           
           const dataUrl = await toPng(target, { cacheBust: true, pixelRatio: settings.quality });
           const link = document.createElement('a');
@@ -206,7 +213,7 @@ console.log(generateAwesomeSnippet(config));`);
                     <CodeWindow 
                       code={snippet} 
                       {...settings} 
-                      minHeight={settings.multiPage ? maxHeight : "auto"}
+                      minHeight={(settings.multiPage && settings.syncHeight) ? maxHeight : "auto"}
                     />
                   </div>
                 ))}

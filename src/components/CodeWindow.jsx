@@ -44,13 +44,14 @@ const CodeWindow = ({
 
   return (
     <div 
-      className={`relative w-full flex items-center justify-center transition-all duration-300 ${background} rounded-xl overflow-hidden`}
-      style={{ padding: `min(${padding}px, 10vw)`, minHeight: minHeight }}
+      className={`relative w-full flex items-stretch justify-center transition-all duration-300 ${background} rounded-xl overflow-hidden`}
+      style={{ padding: `min(${padding}px, 10vw)` }}
     >
       <div 
-        className={`w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col h-full ${
+        className={`code-window-inner w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col flex-1 ${
           theme === 'dark' ? 'bg-zinc-950/90' : 'bg-white/90'
         } ${glassmorphism ? 'apple-blur' : ''}`}
+        style={{ minHeight: minHeight }}
       >
         {/* Title Bar */}
         <div className="flex items-center px-4 h-8 md:h-10 border-b border-zinc-200/10 dark:border-white/10 shrink-0">
