@@ -123,7 +123,14 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
                   {[
                     { id: 'javascript', name: 'JavaScript' },
                     { id: 'python', name: 'Python' },
-                    { id: 'css', name: 'CSS' }
+                    { id: 'css', name: 'CSS' },
+                    { id: 'typescript', name: 'TypeScript' },
+                    { id: 'tsx', name: 'React (TSX)' },
+                    { id: 'html', name: 'HTML' },
+                    { id: 'json', name: 'JSON' },
+                    { id: 'sql', name: 'SQL' },
+                    { id: 'cpp', name: 'C++' },
+                    { id: 'go', name: 'Go' }
                   ].map((lang) => (
                     <button
                       key={lang.id}
