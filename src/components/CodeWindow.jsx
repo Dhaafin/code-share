@@ -10,7 +10,8 @@ const CodeWindow = ({
   padding = 40,
   background = "bg-mesh-1",
   glassmorphism = true,
-  theme = "dark"
+  theme = "dark",
+  minHeight = "auto"
 }) => {
   const [highlightedCode, setHighlightedCode] = useState("");
 
@@ -44,10 +45,10 @@ const CodeWindow = ({
   return (
     <div 
       className={`relative w-full flex items-center justify-center transition-all duration-300 ${background} rounded-xl overflow-hidden`}
-      style={{ padding: `min(${padding}px, 10vw)` }}
+      style={{ padding: `min(${padding}px, 10vw)`, minHeight: minHeight }}
     >
       <div 
-        className={`w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col ${
+        className={`w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col h-full ${
           theme === 'dark' ? 'bg-zinc-950/90' : 'bg-white/90'
         } ${glassmorphism ? 'apple-blur' : ''}`}
       >
@@ -62,7 +63,7 @@ const CodeWindow = ({
         </div>
 
         {/* Code Content */}
-        <div className="p-4 md:p-6 font-mono text-[11px] md:text-[13px] leading-relaxed overflow-x-auto scrolling-touch selection:bg-zinc-500/30">
+        <div className="p-4 md:p-6 font-mono text-[11px] md:text-[13px] leading-relaxed overflow-x-auto scrolling-touch selection:bg-zinc-500/30 flex-1">
           <div
             className="shiki-wrapper"
             dangerouslySetInnerHTML={{ __html: highlightedCode }}

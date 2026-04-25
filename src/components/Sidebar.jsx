@@ -159,7 +159,10 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
               >
                 <div className="space-y-4 pb-4 pl-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Carousel mode</span>
+                    <div className="flex flex-col">
+                      <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Split mode</span>
+                      <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-wider">Multi-image export</span>
+                    </div>
                     <button 
                       onClick={() => setSettings({ ...settings, multiPage: !settings.multiPage })}
                       className={`w-10 h-5 rounded-full transition-all relative cursor-pointer ${
@@ -173,21 +176,41 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
                   </div>
                   
                   {settings.multiPage && (
-                    <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/50">
-                      <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
-                        <span>Lines per page</span>
-                        <span className="text-zinc-500 font-mono text-[11px]">{settings.linesPerPage}</span>
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="space-y-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/50"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                          <span>Snippet count</span>
+                          <span className="text-zinc-500 font-mono text-[11px]">{settings.splitCount || 2} images</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="2"
+                          max="10"
+                          step="1"
+                          value={settings.splitCount || 2}
+                          onChange={(e) => setSettings({ ...settings, splitCount: parseInt(e.target.value) })}
+                          className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
+                        />
                       </div>
-                      <input
-                        type="range"
-                        min="5"
-                        max="50"
-                        step="5"
-                        value={settings.linesPerPage}
-                        onChange={(e) => setSettings({ ...settings, linesPerPage: parseInt(e.target.value) })}
-                        className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-950 dark:accent-white"
-                      />
-                    </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Sync heights</span>
+                        <button 
+                          onClick={() => setSettings({ ...settings, syncHeight: !settings.syncHeight })}
+                          className={`w-10 h-5 rounded-full transition-all relative cursor-pointer ${
+                            settings.syncHeight ? 'bg-zinc-950 dark:bg-white' : 'bg-zinc-200 dark:bg-zinc-800'
+                          }`}
+                        >
+                          <div className={`absolute top-1 w-3 h-3 rounded-full transition-all ${
+                            settings.syncHeight ? 'left-6 bg-white dark:bg-zinc-950' : 'left-1 bg-white'
+                          }`} />
+                        </button>
+                      </div>
+                    </motion.div>
                   )}
                 </div>
               </motion.div>
