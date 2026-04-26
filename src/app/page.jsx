@@ -208,7 +208,7 @@ console.log(generateAwesomeSnippet(config));`);
                       snippetRefs.current[idx] = el;
                       if (!settings.multiPage && idx === 0) exportRef.current = el;
                     }}
-                    className={`${settings.multiPage ? 'w-full md:w-[450px] shrink-0 snap-center' : 'w-full'}`}
+                    className={`${settings.multiPage ? 'shrink-0 snap-center flex justify-center' : 'w-full flex justify-center'}`}
                   >
                     <CodeWindow 
                       code={snippet} 
