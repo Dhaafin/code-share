@@ -68,7 +68,7 @@ console.log(generateAwesomeSnippet(config));`);
       // If turning OFF or multiPage is off, immediately reset to auto
       if (maxHeight !== "auto") setMaxHeight("auto");
     }
-  }, [code, settings.splitCount, settings.syncHeight, settings.padding, settings.multiPage]);
+  }, [code, settings.splitCount, settings.syncHeight, settings.padding, settings.multiPage, settings.width]);
 
   useLayoutEffect(() => {
     // Only perform measurement if we are in sync mode and currently in 'auto' state
@@ -83,7 +83,7 @@ console.log(generateAwesomeSnippet(config));`);
       }, 60); // Slightly longer delay for stability
       return () => clearTimeout(timer);
     }
-  }, [maxHeight, settings.multiPage, settings.syncHeight, settings.splitCount, code, settings.padding]);
+  }, [maxHeight, settings.multiPage, settings.syncHeight, settings.splitCount, code, settings.padding, settings.width]);
 
   const copyImage = async () => {
     // Current behavior: copy the whole thing or first snippet
