@@ -12,7 +12,8 @@ const CodeWindow = ({
   background = "bg-mesh-1",
   glassmorphism = true,
   theme = "dark",
-  minHeight = "auto"
+  minHeight = "auto",
+  width = "auto"
 }) => {
   const [highlightedCode, setHighlightedCode] = useState("");
   const [displayLang, setDisplayLang] = useState(language);
@@ -53,8 +54,11 @@ const CodeWindow = ({
 
   return (
     <div 
-      className={`relative w-full flex items-stretch justify-center transition-all duration-300 ${background} rounded-xl overflow-hidden`}
-      style={{ padding: `min(${padding}px, 10vw)` }}
+      className={`relative mx-auto flex items-stretch justify-center transition-all duration-300 ${background} rounded-xl overflow-hidden`}
+      style={{ 
+        padding: `min(${padding}px, 10vw)`,
+        width: width === 'auto' ? 'max-content' : width
+      }}
     >
       <div 
         className={`code-window-inner w-full min-h-[100px] border border-zinc-200/20 dark:border-white/20 shadow-premium rounded-[12px] md:rounded-[var(--radius-apple)] overflow-hidden flex flex-col flex-1 ${

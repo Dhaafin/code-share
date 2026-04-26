@@ -67,8 +67,27 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
                     </div>
                   </div>
 
-                  {/* Layout */}
-                  <div className="space-y-2">
+                  {/* Layout Controls */}
+                  <div className="space-y-3">
+                    <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-400">Canvas Width</span>
+                    <div className="grid grid-cols-4 gap-2">
+                      {['auto', '480px', '800px', '1200px'].map((w) => (
+                        <button
+                          key={w}
+                          onClick={() => setSettings({ ...settings, width: w })}
+                          className={`h-8 rounded-md border text-[10px] font-bold uppercase transition-all flex items-center justify-center cursor-pointer ${
+                            (settings.width || 'auto') === w
+                              ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-md'
+                              : 'bg-zinc-100/50 text-zinc-500 border-zinc-200 dark:bg-zinc-800/50 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                          }`}
+                        >
+                          {w === 'auto' ? 'Auto' : w.replace('px', '')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 pt-2">
                     <div className="flex justify-between text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
                       <span>Padding</span>
                       <span className="text-zinc-500 font-mono text-[11px]">{settings.padding}px</span>
