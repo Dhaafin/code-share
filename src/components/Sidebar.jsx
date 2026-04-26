@@ -121,6 +121,7 @@ const Sidebar = ({ settings, setSettings, onExport, isExporting, onCopy, isCopyi
               >
                 <div className="grid grid-cols-1 gap-2 pb-4 pl-1">
                   {[
+                    { id: 'auto', name: 'Auto-Detect ✨' },
                     { id: 'javascript', name: 'JavaScript' },
                     { id: 'python', name: 'Python' },
                     { id: 'css', name: 'CSS' },

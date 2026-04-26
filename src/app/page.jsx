@@ -11,7 +11,7 @@ export default function Home() {
     background: "bg-mesh-1",
     theme: "dark",
     glassmorphism: true,
-    language: "javascript",
+    language: "auto",
     multiPage: false,
     splitCount: 2,
     syncHeight: true,

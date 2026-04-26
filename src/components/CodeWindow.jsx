@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import TrafficLights from "./TrafficLights";
 import { codeToHtml } from "shiki";
+import { detectLanguage } from "@/utils/detectLanguage";
 
 const CodeWindow = ({ 
   code = "", 
@@ -14,16 +15,24 @@ const CodeWindow = ({
   minHeight = "auto"
 }) => {
   const [highlightedCode, setHighlightedCode] = useState("");
+  const [displayLang, setDisplayLang] = useState(language);
 
   useEffect(() => {
     const highlight = async () => {
       if (!code) {
         setHighlightedCode("");
+        setDisplayLang(language);
         return;
       }
       try {
+        let activeLang = language;
+        if (language === 'auto') {
+          activeLang = detectLanguage(code);
+        }
+        setDisplayLang(activeLang);
+
         const html = await codeToHtml(code, {
-          lang: language,
+          lang: activeLang,
           theme: theme === 'dark' ? 'github-dark' : 'github-light'
         });
         setHighlightedCode(html);
@@ -58,7 +67,7 @@ const CodeWindow = ({
           <TrafficLights />
           <div className="flex-1 flex justify-center pr-8 md:pr-12">
             <span className="text-[9px] md:text-[11px] font-medium text-zinc-500 tracking-wide uppercase opacity-60">
-              {language}
+              {displayLang === 'auto' ? 'detecting...' : displayLang}
             </span>
           </div>
         </div>
